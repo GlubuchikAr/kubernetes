@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-exchange
+spec:
+  replicas: 1 # ЗАДАНИЕ: Укажите количество реплик
+  selector:
+    matchLabels:
+      app: data-exchange-app # ДОПОЛНИТЕ: Метка для селектора
+  template:
+    metadata:
+      labels:
+        app: data-exchange-app # ПОВТОРИТЕ: Метка из selector.matchLabels
+    spec:
+      containers:
+      - name: busybox # ДОПОЛНИТЕ: Имя первого контейнера
+        image: busybox
+        command: ["/bin/sh", "-c"] 
+        args: 
+          - |
+            while true; do
+              echo "Data from busybox at $(date)" >> /output/file.txt;
+              sleep 5;
+            done
+        volumeMounts:
+        - name: vol # ДОПОЛНИТЕ: Имя монтируемого раздела. Должно совпадать с именем эфемерного хранилища, объявленного на уровне пода.
+          mountPath: /output # КЛЮЧЕВОЕ: Путь монтирования эфемерного хранилища внутри контейнера 1
+      - name: multitool # ДОПОЛНИТЕ: Имя второго контейнера
+        image: wbitt/network-multitool
+        command: ["/bin/sh", "-c"]
+        args: ["tail -f /input/file.txt"] # КЛЮЧЕВОЕ: Команда для чтения данных из файла, расположенного в директории, указанной в volumeMounts контейнера
+        volumeMounts:
+        - name: vol # ДОПОЛНИТЕ: Имя монтируемого раздела. Должно совпадать с именем эфемерного хранилища, объявленного на уровне пода
+          mountPath: /input # КЛЮЧЕВОЕ: Путь монтирования эфемерного хранилища внутри контейнера 2
+      volumes:
+      - name: vol # ДОПОЛНИТЕ: Имя монтируемого раздела эфемерного хранилища
+        emptyDir: {} # ИНФОРМАЦИЯ: Определяем эфемерное хранилище, которое работает только внутри пода
