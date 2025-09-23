@@ -4,14 +4,14 @@ backend:
   image: "wbitt/network-multitool"
   service:
     type: ClusterIP
-    port: 8080
+    port: 8081
 
 frontend:
   name: "frontend"
   replicaCount: 2
-  image: "nginx"
+  image: "nginx:1.20"
   service:
     type: ClusterIP
-    port: 80
+    port: 81
 
-namespace: default
+namespace: app1

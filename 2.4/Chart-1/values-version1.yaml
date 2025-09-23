@@ -9,9 +9,9 @@ backend:
 frontend:
   name: "frontend"
   replicaCount: 2
-  image: "nginx"
+  image: "nginx:1.22"
   service:
     type: ClusterIP
     port: 80
 
-namespace: default
+namespace: app1

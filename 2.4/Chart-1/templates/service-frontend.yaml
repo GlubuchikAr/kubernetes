@@ -9,4 +9,5 @@ spec:
   ports:
   - port: {{ .Values.frontend.service.port }}
     targetPort: 80
+    protocol: TCP
   type: {{ .Values.frontend.service.type }}

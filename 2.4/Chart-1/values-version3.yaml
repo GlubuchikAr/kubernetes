@@ -14,4 +14,4 @@ frontend:
     type: ClusterIP
     port: 80
 
-namespace: default
+namespace: app2
