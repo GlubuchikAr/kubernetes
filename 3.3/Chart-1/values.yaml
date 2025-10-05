@@ -1,0 +1,25 @@
+backend:
+  name: "backend"
+  replicaCount: 2
+  image: "wbitt/network-multitool"
+  service:
+    type: ClusterIP
+    port: 80
+
+frontend:
+  name: "frontend"
+  replicaCount: 2
+  image: "wbitt/network-multitool"
+  service:
+    type: ClusterIP
+    port: 80
+
+cache:
+  name: "cache"
+  replicaCount: 2
+  image: "wbitt/network-multitool"
+  service:
+    type: ClusterIP
+    port: 80
+
+namespace: app
